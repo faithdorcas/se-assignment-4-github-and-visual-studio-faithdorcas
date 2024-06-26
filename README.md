@@ -353,7 +353,7 @@ Make Changes on a Feature Branch:
 
 Create a new branch and make your changes
 git checkout -b feature-branch
-# Make changes to the code
+make changes to the code
 git add .
 git commit -m "Implement new feature"
 git push origin feature-branch
@@ -417,7 +417,7 @@ In your repository, create a directory named .github/workflows.
 Create a new file in this directory, e.g., ci.yml.
 Define the Workflow:
 
-Use YAML syntax to define the workflow. Here’s an example of a simple CI workflow
+Use YAML syntax to define the workflow. 
 name: CI
 
 on: [push, pull_request]
@@ -425,15 +425,20 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    steps:
-    - uses: actions/checkout@v2
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-    - run: npm install
-    - run: npm test
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
 Commit the Workflow File:
 
 Commit and push the workflow file to your repository
@@ -445,9 +450,6 @@ View Workflow Runs:
 Go to the "Actions" tab in your repository to see the status of your workflow runs.
 Click on individual workflow runs to view detailed logs and results.
 GitHub Actions enhances the pull request process by automatically running tests and checks on proposed changes, ensuring that only high-quality code is merged into the main branch.
-
-
-2/2
 
 Explain what GitHub Actions are and how they can be used to automate workflows. Provide an example of a simple CI/CD pipeline using GitHub Actions. Introduction to Visual Studio:
 
@@ -481,8 +483,7 @@ Define the Workflow:
 
 Add the following content to ci-cd.yml:
 name: CI/CD Pipeline
-
-# Trigger the workflow on push or pull request events
+trigger the workflow on push or pull request events
 on:
   push:
     branches: [main]
@@ -492,28 +493,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+steps:
+- name: Checkout code
+  uses: actions/checkout@v2
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+- name: Set up Node.js
+  uses: actions/setup-node@v2
+  with:
+    node-version: '14'
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+- name: Install dependencies
+  run: npm install
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run tests
-      run: npm test
-
+- name: Run tests
+  run: npm test
   deploy:
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/main'
-
-    steps:
+steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
