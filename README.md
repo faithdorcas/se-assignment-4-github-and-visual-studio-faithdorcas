@@ -428,17 +428,12 @@ jobs:
 steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Set up Node.js
+name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run tests
-      run: npm test
+    - run: npm install
+    - run: npm test
 Commit the Workflow File:
 
 Commit and push the workflow file to your repository
